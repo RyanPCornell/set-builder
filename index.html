@@ -252,6 +252,27 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .bd-who{width:7.4rem; font-weight:600;}
 .bd-btn.pdf{background:var(--forest-mid); border-color:var(--forest-mid); color:#fff;}
 .bd-btn.pdf:hover{filter:brightness(1.12); border-color:var(--forest-mid);}
+.bd-btn.expl{border-color:var(--forest-mid); color:var(--forest-mid);}
+.bd-btn.expl:hover{background:#eef4f0;}
+/* explanation modal */
+.bd-modal{position:absolute; inset:0; z-index:40; display:flex; align-items:center; justify-content:center;
+  background:rgba(12,26,20,.5); backdrop-filter:blur(2px); padding:clamp(1rem,4vh,3rem) 1rem;}
+.bd-modal-card{background:#fff; border-radius:16px; box-shadow:0 24px 60px rgba(12,26,20,.35);
+  width:min(58rem,100%); max-height:100%; display:flex; flex-direction:column;
+  padding:clamp(.9rem,2.4vh,1.5rem) clamp(1rem,2.4vw,1.7rem) clamp(.8rem,2vh,1.2rem);}
+.bd-modal-head{display:flex; align-items:center; justify-content:space-between; gap:1rem;}
+.bd-modal-head h3{font-family:'Merriweather',serif; font-size:clamp(1.05rem,2vw,1.4rem); color:var(--forest);}
+.bd-modal-x{font:inherit; font-size:1.5rem; line-height:1; color:#8c9a93; background:none; border:none;
+  cursor:pointer; padding:0 .2rem;}
+.bd-modal-x:hover{color:var(--forest);}
+.bd-modal-hint{font-size:clamp(.76rem,1.2vw,.9rem); color:#5b6b63; margin:.25rem 0 .5rem; line-height:1.4;}
+.bd-modal-hint b{color:var(--forest);}
+.bd-modal-ta{flex:1; min-height:min(46vh,22rem); width:100%; resize:vertical; font:inherit;
+  font-size:clamp(.82rem,1.25vw,.95rem); line-height:1.6; color:#22302b; background:#fbfcfb;
+  border:1.5px solid var(--line); border-radius:11px; padding:.7rem .85rem;}
+.bd-modal-ta:focus{outline:none; border-color:var(--forest-mid); background:#fff;}
+.bd-modal-foot{display:flex; align-items:center; gap:.5rem; margin-top:.6rem;}
+.bd-modal-note{flex:1; font-size:.74rem; color:#8c9a93; font-style:italic;}
 .bd-name:focus{outline:none; border-color:var(--accent);}
 .bd-modes{display:flex; gap:.15rem; background:#e9efeb; border-radius:10px; padding:.15rem;}
 .bd-mode{font:inherit; font-weight:700; font-size:.76rem; cursor:pointer; color:#5b6b63;
@@ -264,7 +285,6 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .bd-polbtn.active[data-pol="-1"]{background:#A4373A; color:#fff;}
 .bd-preset,.bd-btn{font:inherit; font-weight:700; font-size:.76rem; cursor:pointer; color:var(--forest);
   background:#fff; border:1.5px solid var(--line); border-radius:9px; padding:.35rem .6rem;}
-.bd-btn.on{background:#A4373A; border-color:#A4373A; color:#fff;}
 .bd-btn:hover,.bd-preset:hover{border-color:var(--accent);}
 .bd-body{flex:1; min-height:0; display:grid; grid-template-columns:172px 1fr 268px; gap:.6rem;}
 .bd-palette{overflow-y:auto; display:flex; flex-direction:column; gap:.45rem; padding-right:.15rem;}
@@ -293,7 +313,6 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .bd-lsign{font:900 15px 'Inter',sans-serif; paint-order:stroke; stroke:#fff; stroke-width:4px; stroke-linejoin:round;}
 .bd-link{transition:stroke-width .15s;} .bd-link:hover{stroke-width:5.5;}
 .bd-halo{transition:opacity .3s, r .3s;}
-.bd-bndlbl{font:800 12px 'Inter',sans-serif; fill:#A4373A;}
 .bd-panel{overflow-y:auto; display:flex; flex-direction:column; gap:.45rem; min-height:0;}
 .bd-mix{background:#fff; border:1px solid var(--line); border-radius:11px; padding:.5rem .6rem;}
 .bd-mixrow{display:flex; align-items:center; gap:.4rem; font-size:.72rem; font-weight:700; color:#4a6055; margin-bottom:.22rem;}
@@ -332,7 +351,6 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .bd-verdict{background:#f3f8f5; border-left:4px solid var(--accent); border-radius:9px; padding:.5rem .65rem;
   font-size:.74rem; line-height:1.45; color:#33453d;}
 .bd-verdict b{color:var(--forest);} .bd-verdict em{color:var(--forest); font-style:italic;}
-.bd-ext{display:block; margin-top:.3rem; color:#A4373A; font-weight:600;}
 @media(max-width:1180px){.bd-body{grid-template-columns:150px 1fr 230px;}}
 
 
@@ -389,8 +407,8 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
           <option value="fashion">Fast fashion</option>
           <option value="commute">Campus commute</option>
         </select>
-        <button class="bd-btn ghost" type="button" data-bnd>⬚ Boundary</button>
         <button class="bd-btn ghost" type="button" data-clear>Clear</button>
+        <button class="bd-btn expl" type="button" data-explbtn title="Write or read the explanation of this system">Explanation</button>
         <button class="bd-btn pdf" type="button" data-pdf title="Opens your browser's print dialog — choose “Save as PDF”">⤓ Save as PDF</button>
       </div>
     </div>
@@ -414,12 +432,6 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
             </pattern>
           </defs>
           <rect x="0" y="0" width="1000" height="620" fill="url(#bdPaper)"/>
-          <g data-boundary style="display:none">
-            <rect data-bnd-rect x="120" y="90" width="760" height="440" rx="26" fill="none"
-                  stroke="#A4373A" stroke-width="3.5" stroke-dasharray="14 11"/>
-            <text data-bnd-lbl x="500" y="80" text-anchor="middle" class="bd-bndlbl">the system, as you have drawn it</text>
-            <circle data-bnd-h cx="880" cy="530" r="11" fill="#A4373A" stroke="#fff" stroke-width="3" style="cursor:nwse-resize"/>
-          </g>
           <g data-links></g>
           <g data-nodes></g>
           <g data-rubber></g>
@@ -442,6 +454,24 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
           <svg viewBox="0 0 260 74" class="bd-spark" data-spark hidden></svg>
         </div>
         <div class="bd-verdict" data-verdict></div>
+      </div>
+    </div>
+
+    <!-- ── explanation ── -->
+    <div class="bd-modal" data-modal hidden>
+      <div class="bd-modal-card" role="dialog" aria-modal="true" aria-label="Explanation of this system">
+        <div class="bd-modal-head">
+          <h3>Explanation</h3>
+          <button class="bd-modal-x" type="button" data-modal-close aria-label="Close">&times;</button>
+        </div>
+        <p class="bd-modal-hint" data-modal-hint></p>
+        <textarea class="bd-modal-ta" data-expl spellcheck="true"
+          placeholder="Explain your system in plain language. Why did you choose these components? What does each one do to the others? Which loop matters most, and what would you change?"></textarea>
+        <div class="bd-modal-foot">
+          <span class="bd-modal-note">Whatever is written here is printed at the bottom of your PDF.</span>
+          <button class="bd-btn" type="button" data-expl-clear>Clear</button>
+          <button class="bd-btn pdf" type="button" data-modal-done>Done</button>
+        </div>
       </div>
     </div>
   </div>
@@ -492,12 +522,10 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     var TMAP={}; TYPES.forEach(function(t){ TMAP[t.id]=t; });
 
     /* ── state ── */
-    var nodes=[], links=[], uid=1, mode='move', pol=1, selected=null, simVals={}, boundaryOn=false;
-    var report={cnt:{soc:0,eco:0,tec:0}, cross:0, loops:[], tri:false, outside:[], checks:[], verdict:''};
+    var nodes=[], links=[], uid=1, mode='move', pol=1, selected=null, simVals={};
+    var report={cnt:{soc:0,eco:0,tec:0}, cross:0, loops:[], tri:false, checks:[], verdict:''};
     var gNodes=wrap.querySelector('[data-nodes]'), gLinks=wrap.querySelector('[data-links]'),
-        gRub=wrap.querySelector('[data-rubber]'), emptyTx=wrap.querySelector('[data-empty]'),
-        gBnd=wrap.querySelector('[data-boundary]'), bRect=wrap.querySelector('[data-bnd-rect]'),
-        bHandle=wrap.querySelector('[data-bnd-h]'), bLbl=wrap.querySelector('[data-bnd-lbl]');
+        gRub=wrap.querySelector('[data-rubber]'), emptyTx=wrap.querySelector('[data-empty]');
 
     function toSvg(e){ var p=svg.createSVGPoint(); p.x=e.clientX; p.y=e.clientY;
       var m=svg.getScreenCTM(); return m? p.matrixTransform(m.inverse()) : {x:500,y:310}; }
@@ -642,42 +670,32 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       });
     }
 
-    /* ── boundary ── */
-    var bTog=wrap.querySelector('[data-bnd]');
-    bTog.addEventListener('click',function(){
-      boundaryOn=!boundaryOn; bTog.classList.toggle('on',boundaryOn);
-      gBnd.style.display=boundaryOn?'':'none'; analyse();
-    });
-    function bndDrag(el2,fn){
-      el2.addEventListener('pointerdown',function(e){
-        if(!boundaryOn) return; e.stopPropagation(); e.preventDefault();
-        var st=toSvg(e), r0={x:+bRect.getAttribute('x'),y:+bRect.getAttribute('y'),w:+bRect.getAttribute('width'),h:+bRect.getAttribute('height')};
-        try{ el2.setPointerCapture(e.pointerId); }catch(err){}
-        function mv(ev){ var q=toSvg(ev); fn(r0,q.x-st.x,q.y-st.y); syncBnd(); analyse(); }
-        function up(ev){ el2.removeEventListener('pointermove',mv); el2.removeEventListener('pointerup',up);
-          try{ el2.releasePointerCapture(ev.pointerId); }catch(err){} }
-        el2.addEventListener('pointermove',mv); el2.addEventListener('pointerup',up);
-      });
+    /* ── explanation ── */
+    var modal=wrap.querySelector('[data-modal]'), explEl=wrap.querySelector('[data-expl]'),
+        explHint=wrap.querySelector('[data-modal-hint]');
+    var explSource=null;   // name of the worked example the text came from, if any
+    function setExplanation(text, source){
+      explEl.value=text||''; explSource=source||null; syncHint();
     }
-    bndDrag(bRect,function(r0,dx,dy){
-      bRect.setAttribute('x',Math.max(6,Math.min(1000-r0.w-6,r0.x+dx)));
-      bRect.setAttribute('y',Math.max(30,Math.min(620-r0.h-6,r0.y+dy)));
-    });
-    bndDrag(bHandle,function(r0,dx,dy){
-      bRect.setAttribute('width',Math.max(180,Math.min(1000-r0.x-6,r0.w+dx)));
-      bRect.setAttribute('height',Math.max(140,Math.min(620-r0.y-6,r0.h+dy)));
-    });
-    function syncBnd(){
-      var x=+bRect.getAttribute('x'), y=+bRect.getAttribute('y'), w=+bRect.getAttribute('width'), h=+bRect.getAttribute('height');
-      bHandle.setAttribute('cx',x+w); bHandle.setAttribute('cy',y+h);
-      bLbl.setAttribute('x',x+w/2); bLbl.setAttribute('y',Math.max(20,y-12));
+    function syncHint(){
+      explHint.innerHTML = explSource
+        ? 'This is the worked explanation for the <b>'+explSource+'</b> example \u2014 read it, and edit it if you disagree.'
+        : 'Your system, so this one is yours to write. Explain it as you would to somebody who has never seen a systems diagram.';
     }
-    function inside(n){
-      if(!boundaryOn) return true;
-      var x=+bRect.getAttribute('x'), y=+bRect.getAttribute('y'), w=+bRect.getAttribute('width'), h=+bRect.getAttribute('height');
-      return n.x>x && n.x<x+w && n.y>y && n.y<y+h;
-    }
-    syncBnd();
+    function openExpl(){ modal.hidden=false; setTimeout(function(){ explEl.focus(); },40); }
+    function closeExpl(){ modal.hidden=true; }
+    wrap.querySelector('[data-explbtn]').addEventListener('click',openExpl);
+    wrap.querySelector('[data-modal-close]').addEventListener('click',closeExpl);
+    wrap.querySelector('[data-modal-done]').addEventListener('click',closeExpl);
+    wrap.querySelector('[data-expl-clear]').addEventListener('click',function(){
+      setExplanation('',null); explEl.focus();
+    });
+    modal.addEventListener('pointerdown',function(e){ if(e.target===modal) closeExpl(); });
+    modal.addEventListener('keydown',function(e){
+      e.stopPropagation();
+      if(e.key==='Escape') closeExpl();
+    });
+    syncHint();
 
     /* ── modes / toolbar ── */
     wrap.querySelectorAll('.bd-mode').forEach(function(b){
@@ -697,17 +715,18 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     wrap.querySelector('[data-clear]').addEventListener('click',function(){
       nodes.slice().forEach(removeNode); links=[]; redrawLinks(); emptyTx.style.display=''; analyse();
       wrap.querySelector('[data-spark]').hidden=true;
+      setExplanation('',null);
     });
 
     /* ── presets ── */
     var PRESETS={
-      water:{name:'Phoenix water',
+      water:{name:'Phoenix water', expl:'Phoenix water — why this system is drawn the way it is.\n\nThis is a desert city\'s water supply cut down to the six things that actually drive it.\n\nMore households means more demand on the water and sewer network, so that arrow amplifies (+). The network draws its supply from the river and the aquifer, so the more it delivers, the less freshwater is left — that arrow dampens (\u2212).\n\nWhen freshwater gets scarce, government notices: restrictions, rate structures, groundwater rules. That link is positive, because scarcity produces MORE governing, not less. Government action then dampens household demand (\u2212) — reducing use is the entire point of a conservation rule.\n\nFollow those four arrows around and you arrive back where you started having passed through two dampening links. Two negatives cancel, which is why the tool calls this loop reinforcing rather than balancing: it does not quietly settle down. A dry decade tightens the rules, which suppresses demand, which relieves the shortage, which relaxes the rules — and the whole cycle starts again, always one drought behind the problem.\n\nThe second loop is faster and simpler. More households bid up the price of water (+), and higher prices push demand back down (\u2212). One dampening link means one negative, so this loop is balancing: it self-corrects, and it does so long before any government meeting is scheduled.\n\nClimate sits outside both loops deliberately. It pushes on freshwater (\u2212) — hotter years, more evaporation, thinner snowpack — but nothing in the city pushes back on climate at this scale. It is a driver, not a participant: something that changes your system while your system cannot change it.\n\nThis counts as a socio-ecological-technical system rather than an engineering problem because you cannot delete any one of the three colours and still tell the story. Remove government and prices and a drought is just hydrology. Remove the pipes and the water never reaches anyone. Remove the river and there is nothing to argue about.',
         n:[['water',180,160],['house',430,130],['pipe',700,160],['gov',780,380],['climate',180,420],['market',470,460]],
         l:[[1,2,1],[2,0,-1],[0,3,1],[3,1,-1],[4,0,-1],[1,5,1],[5,1,-1]]},
-      fashion:{name:'Fast fashion',
+      fashion:{name:'Fast fashion', expl:'Fast fashion — why this system is drawn the way it is.\n\nThis traces a cheap t-shirt from the moment somebody wants one to the river it eventually turns up in.\n\nHouseholds wanting more clothes push demand into the market (+). A hot market pulls more production out of the factories (+). Busy factories hire more workers (+). And paid workers are themselves households with money to spend (+). Four amplifying links and not one dampening link — there is nothing in this loop that says stop. That is the engine of fast fashion, and it is why the tool labels it reinforcing: every turn of the loop makes the next turn bigger.\n\nThe second loop is the one that is supposed to stop it. Factories discharge dye and finishing effluent, so more production means less clean freshwater (\u2212). Degraded water eventually produces government attention (+) — inspections, discharge limits, fines. And regulation dampens what factories can do (\u2212).\n\nTwo dampening links cancel again, so this loop also comes out reinforcing rather than self-correcting, and that is the uncomfortable finding. A regulatory response that only fires after the river is visibly ruined does not hold production in check; it lets it run, punishes it late, and lets it run again. The Clean by Design case from the lecture is interesting precisely because it did not work this way — it cut pollution by making it cheaper to pollute less, which changes what the factory does without waiting for the river to fail.\n\nNotice what the workers are doing here. They appear as the reward side of production and as consumers in their own right, which is exactly why \u201cjust buy less\u201d is not a costless prescription: the arrow from jobs back to households is real income for real people.\n\nNotice too what is missing. There is no arrow from households to freshwater. Nobody buying a shirt ever experiences the river. That absent arrow is the whole problem — the feedback exists in the world, but not in the buyer\'s information.',
         n:[['house',180,150],['market',430,120],['factory',700,180],['water',760,430],['work',430,470],['gov',170,400]],
         l:[[0,1,1],[1,2,1],[2,3,-1],[2,4,1],[3,5,1],[5,2,-1],[4,0,1]]},
-      commute:{name:'Campus commute',
+      commute:{name:'Campus commute', expl:'Campus commute — why this system is drawn the way it is.\n\nSix components, and the argument is about induced demand: the reason adding lanes so often fails to fix traffic.\n\nMore households means more trips on the road and transit network (+). A busier network means worse air (\u2212) — that is the tailpipe. Worse air eventually gets government\'s attention (+), and government responds by investing in the network (+): more lanes, more buses, more capacity.\n\nTrace that loop and there is exactly one dampening link in it, so it is balancing — it genuinely pushes back. Congestion and pollution produce a response that relieves congestion and pollution. This is the loop most transport planning assumes it is working with.\n\nThe other loop is the trouble. A more usable network makes driving feel normal — it shapes culture and habits (+) — and those habits pull more people into car-dependent living (+), which puts more trips back onto the road (+). Three amplifying links and no dampening one: reinforcing. Every improvement in capacity quietly recruits its own new traffic, which is why the balancing loop keeps having to fire again.\n\nThe power grid enters as a dampening link into the network (\u2212) to stand for electrification: the same number of trips with far less local pollution per trip. Look closely at what that does and does not fix. It weakens the link between driving and dirty air, which is real progress. It leaves the reinforcing habit loop completely untouched. An electric car still takes up a lane.\n\nThat is the socio-ecological-technical point in one line: an ecological problem (the air), a technical fix (electrification), and a social driver (habit) that will out-run the fix unless something addresses it directly.',
         n:[['house',180,160],['road',430,140],['air',720,180],['gov',760,420],['culture',430,470],['grid',170,410]],
         l:[[0,1,1],[1,2,-1],[2,3,1],[3,1,1],[1,4,1],[4,0,1],[5,1,-1]]}
     };
@@ -717,6 +736,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       var made=P.n.map(function(o){ return addNode(o[0],o[1],o[2]); });
       P.l.forEach(function(o){ links.push({a:made[o[0]],b:made[o[1]],p:o[2]}); });
       wrap.querySelector('[data-name]').value=P.name;
+      setExplanation(P.expl, P.name);
       redrawLinks(); analyse(); e.target.value='';
     });
 
@@ -750,7 +770,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     var loopsCache=[];
     function analyse(){
       var cnt={soc:0,eco:0,tec:0};
-      nodes.forEach(function(n){ if(inside(n)) cnt[n.dom]++; });
+      nodes.forEach(function(n){ cnt[n.dom]++; });
       var tot=Math.max(1,cnt.soc+cnt.eco+cnt.tec);
       ['soc','eco','tec'].forEach(function(k){
         wrap.querySelector('[data-c="'+k+'"]').textContent=cnt[k];
@@ -762,7 +782,6 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
         var s={}; L.nodes.forEach(function(i){ s[nodes[i].dom]=1; });
         return s.soc&&s.eco&&s.tec;
       });
-      var outside=nodes.filter(function(n){return !inside(n);});
       var checks=[
         {ok:(cnt.soc>0&&cnt.eco>0&&cnt.tec>0), t:'All three systems represented'},
         {ok:cross>0, t:'At least one cross-system link ('+cross+')'},
@@ -790,9 +809,8 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       else if(!loopsCache.length) v='Good — the systems are talking. But nothing comes back around yet, so nothing can amplify or self-correct. Close a loop.';
       else if(!triLoop) v='You have feedback. Now try to close a loop that passes through <b>all three</b> colours: that is a socio-ecological-technical system.';
       else v='<b>That is a SET.</b> Social, ecological and technical components in a loop that feeds back on itself — which means it can amplify, absorb, or tip. Shock it and see which.';
-      if(boundaryOn && outside.length) v+=' <span class="bd-ext">'+outside.length+' component'+(outside.length>1?'s':'')+' sit outside your boundary — everything out there becomes someone else\'s problem.</span>';
       verdictEl.innerHTML=v;
-      report={cnt:cnt, cross:cross, loops:loopsCache, tri:triLoop, outside:outside, checks:checks, verdict:v};
+      report={cnt:cnt, cross:cross, loops:loopsCache, tri:triLoop, checks:checks, verdict:v};
     }
 
     /* ── shock simulation ── */
@@ -854,7 +872,6 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       ".pc-fig figcaption{font-size:8pt;color:#5b6b63;padding:5px 3px 1px;border-top:1px solid #eef2ef;margin-top:4px}"+
       ".k{display:inline-block;width:8px;height:8px;border-radius:2px;margin:0 3px 0 8px;vertical-align:middle}"+
       ".k.s{background:#c9722b;margin-left:0}.k.e{background:#2f7d4f}.k.t{background:#1C7293}"+
-      ".bnd{display:inline-block;width:14px;height:7px;border:1.5px dashed #A4373A;vertical-align:middle;margin-right:3px}"+
       "b.pos{color:#2f7d4f}b.neg{color:#A4373A}"+
       ".pc-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}"+
       "h2{font-family:'Merriweather',Georgia,serif;font-size:11pt;font-weight:800;color:#1A3C34;"+
@@ -879,7 +896,10 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       ".pc-verdict h3{font-family:'Merriweather',Georgia,serif;font-size:9pt;color:#1A3C34;margin-bottom:2px}"+
       ".pc-verdict{font-size:9pt;line-height:1.5;color:#33453d}"+
       ".pc-verdict b{color:#1A3C34}.pc-verdict em{font-style:italic}"+
-      ".bd-ext{display:block;margin-top:3px;color:#A4373A;font-weight:600}"+
+      ".pc-expl{margin-top:15px;padding-top:9px;border-top:1px solid #dde7e2}"+
+      ".pc-expl h2{border:0;padding:0;margin-bottom:4px}"+
+      ".pc-expl p{font-size:9pt;line-height:1.5;margin-bottom:5.5px}"+
+      ".pc-expl p:first-of-type{font-weight:600;color:#1A3C34}"+
       ".pc-foot{margin-top:14px;padding-top:6px;border-top:1px solid #dde7e2;font-size:7.5pt;color:#96a49d}";
 
     /* ── export: render a print sheet into a hidden iframe, then let the
@@ -890,19 +910,12 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     function diagramSVG(){
       var c=svg.cloneNode(true);
       c.removeAttribute('class'); c.removeAttribute('style');
-      ['[data-empty]','[data-rubber]','[data-bnd-h]'].forEach(function(q){
+      ['[data-empty]','[data-rubber]'].forEach(function(q){
         var n=c.querySelector(q); if(n) n.remove(); });
-      if(!boundaryOn){ var b=c.querySelector('[data-boundary]'); if(b) b.remove(); }
       // crop the viewBox to the drawing (+ breathing room) so the figure prints big
       var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
       nodes.forEach(function(n){ x0=Math.min(x0,n.x-70); x1=Math.max(x1,n.x+70);
                                  y0=Math.min(y0,n.y-62); y1=Math.max(y1,n.y+82); });
-      if(boundaryOn){
-        var bx=+bRect.getAttribute('x'), by=+bRect.getAttribute('y');
-        x0=Math.min(x0,bx-26); y0=Math.min(y0,by-34);
-        x1=Math.max(x1,bx+ +bRect.getAttribute('width')+26);
-        y1=Math.max(y1,by+ +bRect.getAttribute('height')+26);
-      }
       if(x1-x0<430){ var cx=(x0+x1)/2; x0=cx-215; x1=cx+215; }
       if(y1-y0<280){ var cy=(y0+y1)/2; y0=cy-140; y1=cy+140; }
       x0=Math.max(0,x0); y0=Math.max(0,y0); x1=Math.min(1000,x1); y1=Math.min(620,y1);
@@ -911,8 +924,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       st.textContent=".bd-nlbl{font:700 12px 'Inter',Helvetica,Arial,sans-serif;fill:#33453d;"+
         "paint-order:stroke;stroke:#fff;stroke-width:3.5px;stroke-linejoin:round}"+
         ".bd-lsign{font:900 15px 'Inter',Helvetica,Arial,sans-serif;"+
-        "paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}"+
-        ".bd-bndlbl{font:800 12px 'Inter',Helvetica,Arial,sans-serif;fill:#A4373A}";
+        "paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}";
       c.insertBefore(st, c.firstChild);
       return new XMLSerializer().serializeToString(c);
     }
@@ -933,7 +945,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
         if(!list.length) return '';
         return '<div class="pc-grp"><div class="pc-gh" style="color:'+DOM[k].c+';border-color:'+DOM[k].c+'">'+
           DOM[k].n+' <span>('+list.length+')</span></div><ul>'+
-          list.map(function(n){ return '<li>'+pesc(n.label)+(inside(n)?'':' <em>— outside the boundary</em>')+'</li>'; }).join('')+
+          list.map(function(n){ return '<li>'+pesc(n.label)+'</li>'; }).join('')+
           '</ul></div>';
       }).join('');
 
@@ -955,6 +967,15 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       var checks='<ul class="pc-checks">'+report.checks.map(function(c){
         return '<li class="'+(c.ok?'ok':'no')+'">'+(c.ok?'&#10003;':'&#9675;')+'&nbsp;&nbsp;'+pesc(c.t)+'</li>'; }).join('')+'</ul>';
 
+      // the written explanation, as paragraphs, at the foot of the sheet
+      function explSection(){
+        var t=(explEl.value||'').trim();
+        if(!t) return '';
+        return '<section class="pc-expl"><h2>Explanation</h2>'+
+          t.split(/\n\s*\n/).map(function(par){
+            return '<p>'+pesc(par).replace(/\n/g,'<br>')+'</p>'; }).join('')+'</section>';
+      }
+
       var cnt=report.cnt;
       var doc='<!DOCTYPE html><html><head><meta charset="utf-8"><title>'+pesc(title)+'</title>'+
         '<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">'+
@@ -967,7 +988,6 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
         '<figure class="pc-fig">'+diagramSVG()+
           '<figcaption><span class="k s"></span>Social <span class="k e"></span>Ecological <span class="k t"></span>Technical'+
           ' &nbsp;&nbsp;|&nbsp;&nbsp; <b class="pos">&mdash;+&rarr;</b> amplifies &nbsp; <b class="neg">&mdash;&minus;&rarr;</b> dampens'+
-          (boundaryOn?' &nbsp;&nbsp;|&nbsp;&nbsp; <span class="bnd"></span> system boundary':'')+
           '</figcaption></figure>'+
         '<section class="pc-cols">'+
           '<div><h2>Components <span class="pc-tally">'+cnt.soc+' social &middot; '+cnt.eco+' ecological &middot; '+cnt.tec+' technical</span></h2>'+comps+
@@ -978,6 +998,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
               report.loops.filter(function(L){return L.balancing;}).length+' balancing</span></h2>'+loops+
             '<div class="pc-verdict"><h3>Read-out</h3>'+report.verdict+'</div></div>'+
         '</section>'+
+        explSection()+
         '<footer class="pc-foot">Built in the Build Your Own SET tool &mdash; SOS 110, Chapter 1 Part 2.</footer>'+
         '</body></html>';
 
