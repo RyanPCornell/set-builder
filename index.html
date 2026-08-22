@@ -273,6 +273,25 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 .bd-modal-ta:focus{outline:none; border-color:var(--forest-mid); background:#fff;}
 .bd-modal-foot{display:flex; align-items:center; gap:.5rem; margin-top:.6rem;}
 .bd-modal-note{flex:1; font-size:.74rem; color:#8c9a93; font-style:italic;}
+/* shock result card */
+.bd-shock-card{background:#fff; border-radius:16px; box-shadow:0 24px 60px rgba(12,26,20,.35);
+  width:min(33rem,100%); border-top:6px solid var(--sc,#40916C);
+  padding:clamp(1.1rem,3vh,1.7rem) clamp(1.1rem,2.6vw,1.7rem);
+  display:flex; flex-direction:column; gap:.5rem; animation:bd-pop .28s cubic-bezier(.2,1.1,.4,1);}
+@keyframes bd-pop{from{transform:scale(.94) translateY(6px); opacity:0;} to{transform:none; opacity:1;}}
+.bd-shock-status{display:flex; align-items:center; gap:.55rem;}
+.bd-shock-dot{width:.72rem; height:.72rem; border-radius:50%; background:var(--sc,#40916C); flex:none;}
+.bd-shock-word{font-family:'Merriweather',serif; font-weight:900; color:var(--sc,#40916C);
+  font-size:clamp(1.25rem,2.8vw,1.7rem); line-height:1;}
+.bd-shock-lead{font-size:clamp(.86rem,1.35vw,1rem); line-height:1.5; color:#22302b;}
+.bd-shock-lead b{color:var(--forest);}
+.bd-shock-body{font-size:clamp(.8rem,1.25vw,.94rem); line-height:1.55; color:#3a4a43;}
+.bd-shock-body b{color:var(--forest);} .bd-shock-body em{font-style:italic; color:var(--forest);}
+.bd-shock-sparkwrap{margin-top:.15rem;}
+.bd-shock-spark{width:100%; height:auto; display:block; background:#fbfcfb;
+  border:1px solid var(--line); border-radius:10px;}
+.bd-shock-cap{font-size:.72rem; color:#8c9a93; line-height:1.4; margin-top:.3rem;}
+.bd-shock-foot{display:flex; justify-content:flex-end; gap:.5rem; margin-top:.45rem;}
 .bd-name:focus{outline:none; border-color:var(--accent);}
 .bd-modes{display:flex; gap:.15rem; background:#e9efeb; border-radius:10px; padding:.15rem;}
 .bd-mode{font:inherit; font-weight:700; font-size:.76rem; cursor:pointer; color:#5b6b63;
@@ -406,6 +425,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
           <option value="water">Phoenix water</option>
           <option value="fashion">Fast fashion</option>
           <option value="commute">Campus commute</option>
+          <option value="fishery">Managed fishery</option>
         </select>
         <button class="bd-btn ghost" type="button" data-clear>Clear</button>
         <button class="bd-btn expl" type="button" data-explbtn title="Write or read the explanation of this system">Explanation</button>
@@ -471,6 +491,22 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
           <span class="bd-modal-note">Whatever is written here is printed at the bottom of your PDF.</span>
           <button class="bd-btn" type="button" data-expl-clear>Clear</button>
           <button class="bd-btn pdf" type="button" data-modal-done>Done</button>
+        </div>
+      </div>
+    </div>
+    <!-- ── shock result ── -->
+    <div class="bd-modal bd-shockmodal" data-shockmodal hidden>
+      <div class="bd-shock-card" role="dialog" aria-modal="true" aria-label="What the shock did">
+        <div class="bd-shock-status"><span class="bd-shock-dot"></span><span class="bd-shock-word" data-shock-word></span></div>
+        <p class="bd-shock-lead" data-shock-lead></p>
+        <p class="bd-shock-body" data-shock-body></p>
+        <div class="bd-shock-sparkwrap" data-shock-sparkwrap>
+          <svg class="bd-shock-spark" data-shock-spark viewBox="0 0 260 78"></svg>
+          <div class="bd-shock-cap">The characteristic shape of this kind of response over time.</div>
+        </div>
+        <div class="bd-shock-foot">
+          <button class="bd-btn" type="button" data-shock-again>↻ Shock again</button>
+          <button class="bd-btn pdf" type="button" data-shock-close>Got it</button>
         </div>
       </div>
     </div>
@@ -728,7 +764,11 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
         l:[[0,1,1],[1,2,1],[2,3,-1],[2,4,1],[3,5,1],[5,2,-1],[4,0,1]]},
       commute:{name:'Campus commute', expl:'Campus commute — why this system is drawn the way it is.\n\nSix components, and the argument is about induced demand: the reason adding lanes so often fails to fix traffic.\n\nMore households means more trips on the road and transit network (+). A busier network means worse air (\u2212) — that is the tailpipe. Worse air eventually gets government\'s attention (+), and government responds by investing in the network (+): more lanes, more buses, more capacity.\n\nTrace that loop and there is exactly one dampening link in it, so it is balancing — it genuinely pushes back. Congestion and pollution produce a response that relieves congestion and pollution. This is the loop most transport planning assumes it is working with.\n\nThe other loop is the trouble. A more usable network makes driving feel normal — it shapes culture and habits (+) — and those habits pull more people into car-dependent living (+), which puts more trips back onto the road (+). Three amplifying links and no dampening one: reinforcing. Every improvement in capacity quietly recruits its own new traffic, which is why the balancing loop keeps having to fire again.\n\nThe power grid enters as a dampening link into the network (\u2212) to stand for electrification: the same number of trips with far less local pollution per trip. Look closely at what that does and does not fix. It weakens the link between driving and dirty air, which is real progress. It leaves the reinforcing habit loop completely untouched. An electric car still takes up a lane.\n\nThat is the socio-ecological-technical point in one line: an ecological problem (the air), a technical fix (electrification), and a social driver (habit) that will out-run the fix unless something addresses it directly.',
         n:[['house',180,160],['road',430,140],['air',720,180],['gov',760,420],['culture',430,470],['grid',170,410]],
-        l:[[0,1,1],[1,2,-1],[2,3,1],[3,1,1],[1,4,1],[4,0,1],[5,1,-1]]}
+        l:[[0,1,1],[1,2,-1],[2,3,1],[3,1,1],[1,4,1],[4,0,1],[5,1,-1]]},
+      fishery:{name:'Managed fishery', expl:'A fishery that holds — why this system is drawn the way it is.\n\nThis is the same commons problem as every fishery that ever collapsed, drawn with the one thing the collapsed ones were missing: a rule that listens.\n\nStart with the stock. More fish in the water means a higher reading on the annual survey (+), and a higher reading means the quota is set higher (+). A bigger quota puts more boats to sea (+), and more fishing takes fish out of the water (\u2212). Follow those four arrows around and you pass through exactly one dampening link. One negative makes this loop balancing: it self-corrects. A good year loosens the quota until the extra fishing pulls the stock back down; a thin year tightens it until the stock recovers. None of that is automatic \u2014 it works only because the quota is tied to the survey rather than to last year\u2019s catch.\n\nThe price loop is faster. A big landing floods the market and the price drops (\u2212), and a lower price sends fewer boats out (+). One dampening link, so this loop is balancing too, and it acts within a season rather than within a year.\n\nThe survey does one more job: it tells the fleet where the fish are not (+). That closes a third loop \u2014 better information, more effective fishing, fewer fish, a lower reading \u2014 with a single dampening link in it. Balancing again, and worth pausing on: here better technology does not run away with the resource, because it sits inside a loop that pushes back.\n\nThe community loop is the slow one. A stock that keeps producing keeps people invested in the fishery (+), and a community with a stake in it defends the rules instead of lobbying against them (+). That feeds the quota, which feeds the fleet, which feeds back on the stock (\u2212). One negative: balancing. This is the loop Elinor Ostrom spent a career documenting, and it is the first one to fail when a fishery is governed from far away.\n\nClimate sits outside all four loops. Warming water pushes on the stock (\u2212) and nothing in the fishery pushes back on the climate. It is a driver, not a participant \u2014 and it is why a system made entirely of balancing loops can still be walked slowly downhill.\n\nThat is the contrast with the other three examples. Every loop here settles, so a shock is absorbed instead of amplified. That is what people mean by a resilient system: not that nothing disturbs it, but that what disturbs it does not run away.',
+        n:[['wild',185,330],['data',400,130],['gov',690,160],['work',720,360],
+           ['market',540,465],['equity',275,465],['climate',160,140]],
+        l:[[0,1,1],[1,2,1],[2,3,1],[3,0,-1],[3,4,-1],[4,3,1],[1,3,1],[0,5,1],[5,2,1],[6,0,-1]]}
     };
     wrap.querySelector('[data-preset]').addEventListener('change',function(e){
       var P=PRESETS[e.target.value]; if(!P) return;
@@ -815,23 +855,83 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 
     /* ── shock simulation ── */
     var spark=wrap.querySelector('[data-spark]');
-    wrap.querySelector('[data-run]').addEventListener('click',function(){
+    var shockModal=wrap.querySelector('[data-shockmodal]');
+    var shockSpark=wrap.querySelector('[data-shock-spark]');
+    var shockResetT=null;
+    var SC={rein:'#A4373A', bal:'#2f7d4f', mid:'#BC8A2E', none:'#BC8A2E'};
+
+    function resetShockViz(){
+      nodes.forEach(function(n){ n.blob.setAttribute('fill',DOM[n.dom].f);
+        n.halo.setAttribute('opacity','0'); n.blob.style.filter=''; });
+    }
+    // The little chart shows the CHARACTERISTIC SHAPE of each response, so it always
+    // agrees with the structural verdict (a runaway climbs, a balancing loop oscillates,
+    // an absorbed shock rises then settles). It is an archetype, not the raw simulation.
+    function archetype(kind){
+      var N=48, ys=[];
+      for(var i=0;i<N;i++){ var t=i/(N-1), y;
+        if(kind==='rein'){ y=0.12+0.86/(1+Math.exp(-(t-0.5)*9)); }        // snowball → saturate
+        else if(kind==='bal'){ var k=6.5; y=0.14+0.82*(k*t)*Math.exp(1-k*t); } // rise, then settle
+        else { y=0.5+0.34*Math.sin(t*Math.PI*4)*Math.exp(-0.2*t); }        // sustained oscillation
+        ys.push(y);
+      }
+      return ys;
+    }
+    function drawCurve(svgEl, ys, color){
+      svgEl.innerHTML='';
+      var N=ys.length, X=function(i){ return 8+i/(N-1)*244; }, Y=function(y){ return 70-Math.max(0,Math.min(1,y))*56; };
+      svgEl.appendChild(el('path',{d:'M8 70 L252 70',stroke:'#e2e9e5','stroke-width':1.4}));
+      var d=''; ys.forEach(function(y,i){ d+=(i?' L':'M')+X(i).toFixed(1)+' '+Y(y).toFixed(1); });
+      svgEl.appendChild(el('path',{d:d,fill:'none',stroke:color,'stroke-width':2.8,
+        'stroke-linecap':'round','stroke-linejoin':'round'}));
+    }
+    function closeShock(){ shockModal.hidden=true; resetShockViz(); }
+    wrap.querySelector('[data-shock-close]').addEventListener('click',closeShock);
+    wrap.querySelector('[data-shock-again]').addEventListener('click',function(){ shockModal.hidden=true; runShock(); });
+    shockModal.addEventListener('pointerdown',function(e){ if(e.target===shockModal) closeShock(); });
+    shockModal.addEventListener('keydown',function(e){ e.stopPropagation(); if(e.key==='Escape') closeShock(); });
+
+    function showShockCard(out, hist){
+      var card=shockModal.querySelector('.bd-shock-card');
+      card.style.setProperty('--sc', SC[out.kind]);
+      shockModal.querySelector('[data-shock-word]').textContent=out.word;
+      shockModal.querySelector('[data-shock-lead]').innerHTML=out.lead;
+      shockModal.querySelector('[data-shock-body]').innerHTML=out.body;
+      var sw=shockModal.querySelector('[data-shock-sparkwrap]');
+      if(hist){ sw.hidden=false; drawCurve(shockSpark, archetype(out.kind), SC[out.kind]); } else { sw.hidden=true; }
+      shockModal.hidden=false;
+    }
+
+    function runShock(){
       if(!nodes.length) return;
+      if(shockResetT){ clearTimeout(shockResetT); shockResetT=null; }
+      resetShockViz();
       var start=selected||nodes[Math.floor(Math.random()*nodes.length)];
       select(start);
+      var reinCount=report.loops.filter(function(L){return !L.balancing;}).length;
+      var balCount=report.loops.filter(function(L){return L.balancing;}).length;
+      function loopName(bal){
+        var L=report.loops.filter(function(x){return x.balancing===bal;})[0];
+        return L ? pesc(L.nodes.map(function(i){return nodes[i].label;}).join(' → ')+' → …') : '';
+      }
+      if(!links.length){
+        wrap.querySelector('[data-runhint]').innerHTML='Nothing is connected yet — draw some arrows, then shock it.';
+        showShockCard({kind:'none', word:'Nowhere to go',
+          lead:'You shocked <b>'+pesc(start.label)+'</b> — but nothing is connected to it yet.',
+          body:'A shock can only travel along arrows. Switch to <b>Connect</b>, draw a link or two, then shock it again to watch the change move through your system.'}, null);
+        return;
+      }
       var idx={}; nodes.forEach(function(n,i){idx[n.id]=i;});
       var val=nodes.map(function(){return 0;}); val[idx[start.id]]=1;
+      var ever=nodes.map(function(){return false;}); ever[idx[start.id]]=true;
       var hist=[1], step=0;
-      nodes.forEach(function(n){ n.blob.style.filter=''; });
       (function frame(){
         if(step++>9){ finish(); return; }
         var nv=val.slice();
-        links.forEach(function(l){
-          nv[idx[l.b.id]] += l.p*val[idx[l.a.id]]*0.62;
-        });
+        links.forEach(function(l){ nv[idx[l.b.id]] += l.p*val[idx[l.a.id]]*0.62; });
         nv=nv.map(function(x){ return Math.max(-4,Math.min(4,x*0.94)); });
         val=nv;
-        var mag=0; val.forEach(function(x){ mag+=Math.abs(x); }); hist.push(mag);
+        var mag=0; val.forEach(function(x,i){ mag+=Math.abs(x); if(Math.abs(x)>=0.12) ever[i]=true; }); hist.push(mag);
         nodes.forEach(function(n,i){
           var x=val[i], a=Math.min(1,Math.abs(x));
           n.blob.setAttribute('fill', x>0.02? 'rgba(47,125,79,'+(0.15+0.7*a)+')' : (x<-0.02? 'rgba(164,55,58,'+(0.15+0.7*a)+')' : DOM[n.dom].f));
@@ -840,24 +940,49 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
         });
         setTimeout(frame, 380);
       })();
-      function finish(){
-        var early=hist[1]||1, late=hist[hist.length-1];
-        var msg;
-        if(late>early*1.35) msg='<b>Runaway.</b> One small change grew as it went round. That is a <em>reinforcing</em> loop — and it is why non-linearity catches people out.';
-        else if(late<early*0.45) msg='<b>Absorbed.</b> Your balancing links damped the change out. That is <em>resilience</em> — until you push past the valley walls.';
-        else msg='<b>It kept going.</b> The change neither died nor exploded; it is still circulating in your system. Real systems live here more often than you would think.';
-        wrap.querySelector('[data-runhint]').innerHTML=msg;
-        // sparkline
-        spark.hidden=false; spark.innerHTML='';
-        var mx=Math.max.apply(null,hist)||1, d='';
-        hist.forEach(function(h,i){ var X=8+i/(hist.length-1)*244, Y=66-h/mx*56; d+=(i?' L':'M')+X.toFixed(1)+' '+Y.toFixed(1); });
-        spark.appendChild(el('path',{d:'M8 66 L252 66',stroke:'#cfdad4','stroke-width':1.6}));
-        spark.appendChild(el('path',{d:d,fill:'none',stroke:'#A4373A','stroke-width':2.8,'stroke-linecap':'round','stroke-linejoin':'round'}));
-        var t=el('text',{x:8,y:12,class:'bd-sparklbl'}); t.textContent='total disturbance in the system over time'; spark.appendChild(t);
-        setTimeout(function(){ nodes.forEach(function(n){ n.blob.setAttribute('fill',DOM[n.dom].f); n.halo.setAttribute('opacity','0'); }); }, 2600);
-      }
-    });
 
+      function finish(){
+        var spread=0; ever.forEach(function(b,i){ if(b && i!==idx[start.id]) spread++; });
+        var spreadTxt = spread===0 ? 'the change stayed on <b>'+pesc(start.label)+'</b>'
+                        : 'the change spread to <b>'+spread+'</b> other component'+(spread>1?'s':'');
+
+        // Verdict comes from STRUCTURE (the same loops the panel lists), not from the
+        // noisy magnitude — so the card can never contradict the loop read-out. We ask
+        // what the shocked component can actually reach along the arrows.
+        var adj={}; nodes.forEach(function(n){ adj[n.id]=[]; });
+        links.forEach(function(l){ adj[l.a.id].push(l.b.id); });
+        var seen={}; seen[start.id]=true; var stk=[start.id];
+        while(stk.length){ var u=stk.pop(); adj[u].forEach(function(v){ if(!seen[v]){ seen[v]=true; stk.push(v); } }); }
+        function reaches(bal){
+          return report.loops.some(function(L){ return L.balancing===bal &&
+            L.nodes.some(function(i){ return seen[nodes[i].id]; }); });
+        }
+        var reinReach=reaches(false), balReach=reaches(true);
+
+        var out;
+        if(reinReach){
+          out={kind:'rein', word:'It ran away',
+            lead:'You shocked <b>'+pesc(start.label)+'</b> and '+spreadTxt+' — straight into a <b>reinforcing loop</b>.',
+            body:'Once the change reaches a loop like '+loopName(false)+', every trip around makes it <b>larger</b>. A small nudge snowballs into a big one — that is <em>non-linearity</em>, and it is how tipping points sneak up on people.'};
+        } else if(balReach){
+          out={kind:'mid', word:'It kept circulating',
+            lead:'You shocked <b>'+pesc(start.label)+'</b> and '+spreadTxt+', looping back through <b>balancing feedback</b>.',
+            body:'A balancing loop like '+loopName(true)+' keeps pushing the change back the other way, so instead of exploding or vanishing it <em>oscillates</em> — over-correcting one way, then the other. That steady give-and-take is what a balancing loop does; it settles into a rhythm rather than simply stopping.'};
+        } else {
+          out={kind:'bal', word:'The system absorbed it',
+            lead:'You shocked <b>'+pesc(start.label)+'</b> and '+spreadTxt+', but the disturbance <b>faded</b>.',
+            body: spread>0
+              ? 'The change rippled outward and then ran out of energy: with no loop to catch it and feed it back, it simply drained out of the system. That capacity to take a hit and return to normal is <em>resilience</em>.'
+              : 'With nothing leading out of <b>'+pesc(start.label)+'</b>, the shock had nowhere to travel and dissipated on the spot. Connect it to something and try again.'};
+        }
+        wrap.querySelector('[data-runhint]').innerHTML='<b>'+out.word+'.</b> Press ⚡ to run it again.';
+        spark.hidden=false; drawCurve(spark, archetype(out.kind), SC[out.kind]);
+        var t=el('text',{x:8,y:12,class:'bd-sparklbl'}); t.textContent='shape of the response'; spark.appendChild(t);
+        showShockCard(out, hist);
+        shockResetT=setTimeout(resetShockViz, 6000);
+      }
+    }
+    wrap.querySelector('[data-run]').addEventListener('click', runShock);
 
     var PRINT_CSS =
       "@page{size:letter portrait;margin:13mm}"+

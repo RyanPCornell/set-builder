@@ -27,6 +27,8 @@ they've drawn actually behaves like a *system* — or is just a pile of parts.
 - **An Explanation.** Each worked example comes with a plain-language write-up of
   why it is drawn that way and what every arrow is doing. Build your own and the
   box is blank for you to fill in.
+- **Four worked examples** to load and pick apart: Phoenix water, fast fashion,
+  the campus commute, and a managed fishery whose loops all balance.
 - **Save as PDF.** Exports a one-page sheet with the diagram, the component and
   connection lists, the checklist, every loop found, and your explanation at the
   foot — for turning in.
