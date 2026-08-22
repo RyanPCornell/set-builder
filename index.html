@@ -776,7 +776,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       var made=P.n.map(function(o){ return addNode(o[0],o[1],o[2]); });
       P.l.forEach(function(o){ links.push({a:made[o[0]],b:made[o[1]],p:o[2]}); });
       wrap.querySelector('[data-name]').value=P.name;
-      setExplanation(P.expl, P.name);
+      setExplanation('', null);   /* students write their own */
       redrawLinks(); analyse(); e.target.value='';
     });
 
@@ -825,8 +825,7 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       var checks=[
         {ok:(cnt.soc>0&&cnt.eco>0&&cnt.tec>0), t:'All three systems represented'},
         {ok:cross>0, t:'At least one cross-system link ('+cross+')'},
-        {ok:loopsCache.length>0, t:'A feedback loop exists ('+loopsCache.length+')'},
-        {ok:triLoop, t:'A loop that closes through all three — a true SET'}
+        {ok:loopsCache.length>0, t:'A feedback loop exists ('+loopsCache.length+')'}
       ];
       checksEl.innerHTML=checks.map(function(c){
         return '<div class="bd-check '+(c.ok?'ok':'')+'"><span>'+(c.ok?'✓':'○')+'</span>'+c.t+'</div>';
